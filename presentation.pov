@@ -3,7 +3,7 @@ global_settings { assumed_gamma 1 }
 
 
 #include "colors.inc"
-#include "textures.inc"
+#include "textures.inc"   
 
 
 //TODO - Alessio : Make orbits shadowless [DONE], improve their lighting when changing ambient parameter [DONE]
@@ -19,13 +19,21 @@ global_settings { assumed_gamma 1 }
 
 //keep orbits circular, no time for explaining Kepler's laws in 120 secs
 
+
+#declare camera_x_pos = 0;
+#declare camera_y_pos = 750000;
+#declare camera_z_pos = -750000;
+
+/*
 camera
 {
-        location <0, 750000, -750000>
+        location <camera_x_pos, camera_y_pos, camera_z_pos>
         look_at <0.0, 0.0,  0.0>
         right x*image_width/image_height
-}  
-
+} 
+*/  
+     
+//camera_moveable(0, 750000, -750000)
 
 //Sun, unique light source
 light_source
@@ -78,7 +86,23 @@ sky_sphere
 
 #include "stages.inc"
 
-#declare current_stage = 0;
+#declare current_stage = 0;    
+
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	jupiter_front_stationary(local_clock)
+#end
+#declare current_stage = current_stage + 1;  
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	jupiter_reach_orbit_visual(local_clock)
+#end
+#declare current_stage = current_stage + 1;
+
 
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
@@ -89,7 +113,8 @@ sky_sphere
 
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = clock - current_stage;
+	#declare local_clock = clock - current_stage;  
+	#declare camera_z_pos = 0;
 	europa_appears(local_clock)
 #end
 #declare current_stage = current_stage + 1;
