@@ -1,16 +1,24 @@
 #include "colors.inc"
 #include "textures.inc"
 
-//TODO - Alessio : Make orbits shadowless, improve their lighting when changing ambient parameter
+//TODO - Alessio : Make orbits shadowless [DONE], improve their lighting when changing ambient parameter [DONE]
+
+// TODO - Vittorio: check that the orbit colors are not TOO bright.
+// I set the orbit objects to "ambient 1" so they are not affected
+// by any change in the scene ambient, but this might have made them
+// too bright.
 
 
 //all dimensions in km
-//Jupiter and Sun raddi, as well as distance between one another rounded to closest 100000km
-//Moons not to scale, orbital inclinations and radii only roughly represntative and not precise 
-//all revolutions and tidial rotations have negative angle increases
+//Jupiter and Sun radii, as well as distance between one another rounded to closest 100.000km
+//Moons not to scale, orbital inclinations and radii only roughly representative and not precise 
+//all revolutions and tidal rotations have negative angle increases
+
+// Uncomment the next line to render with high-resolution textures
+// #declare Final_Textures = 1;
+#include "celestialtextures.inc"
 
 //keep orbits circular, no time for explaining Kepler's laws in 120 secs
-
 
 camera
 {
@@ -31,23 +39,23 @@ light_source
 //scale of the sky-sphere in which the animation is set
 #declare sky_scale = 0.002;
 
-//scaler parameter needed to make the moos appear in the animation
+//scaler parameter needed to make the moons appear in the animation
 #declare io_radius_scaler = 0;
 #declare europa_radius_scaler = 0;
 #declare ganymede_radius_scaler = 0;
 #declare callisto_radius_scaler = 0;
 
-//transmission parameters for the orbit-highliting toruses
+//transmission parameters for the orbit-highliting tori
 #declare io_orbit_transmit = 1;
 #declare europa_orbit_transmit = 1;
 #declare ganymede_orbit_transmit = 1;
 #declare callisto_orbit_transmit = 1;   
 
 #declare final_orbit_transmit = 0.2;
-#declare final_moon_scale=1;
+#declare final_moon_scale = 1;
 
-//clock bny which the revolution of the galilean satellites will start
-//temporal offset due to scenic reson. Making them all start at the same
+//clock by which the revolution of the galilean satellites will start
+//temporal offset due to scenic reasons. Making them all start at the same
 //time gives the false impression of "simmetry" and indirectly of simplicity
 //of the conducted study
 #declare io_rev_start = 40;
@@ -62,19 +70,17 @@ light_source
 #declare ganymede_rev_omega = 4;
 #declare callisto_rev_omega = 2;
 
-//correlation parameter beteween clock-cycles and revolution speed arounf jupiter
+//correlation parameter between clock-cycles and revolution speed around jupiter
 #declare angle_step = 36;
 
 //jovian radius
 #declare jupiter_radius = 150000; 
 
-
 //parameters for the shadow-cone highliting
 #declare jupiter_cone_transmit = 1;
-#declare cone_final_transmission = 0.2;      
+#declare jupiter_cone_final_transmit = 0.2;      
 #declare jupiter_shadow_cone_length = 5*jupiter_radius;
 #declare jupiter_shadow_cone_final_length = 1000*jupiter_radius;
-
 
 //parameter to have "smooth" shadows and make the audience understand the shadowing
 //concept gradually
@@ -86,23 +92,23 @@ light_source
 
 #switch (clock)
 	#range(0,10)
-	    //things to do in the first section : a) Io appears, orbit phases-out from transparency
+		//things to do in the first section : a) Io appears, orbit phases-out from transparency
 		#declare io_radius_scaler = clock/10;
 		#declare io_orbit_transmit = io_orbit_transmit - (clock/10)*0.2;
 	#break
 	
 	#range(10,20)
-	    //things to do in the second section : a) Europa appears, orbit phases-out from transparency
-        #declare local_clock= clock -10;
+		//things to do in the second section : a) Europa appears, orbit phases-out from transparency
+		#declare local_clock= clock -10;
 		#declare europa_radius_scaler = local_clock/10;
 		#declare europa_orbit_transmit = europa_orbit_transmit - (local_clock/10)*0.2;
 		#declare io_radius_scaler = final_moon_scale; 
 		#declare io_orbit_transmit = final_orbit_transmit;
-	#break  
+	#break
 	
 	#range(20,30)
-	    //things to do in the third section : a) Ganymede appears, orbit phases-out from transparency
-        #declare local_clock = clock -20;
+		//things to do in the third section : a) Ganymede appears, orbit phases-out from transparency
+		#declare local_clock = clock -20;
 		#declare ganymede_radius_scaler = local_clock/10;
 		#declare ganymede_orbit_transmit = ganymede_orbit_transmit - (local_clock/10)*0.2;   
 		#declare io_radius_scaler = final_moon_scale;
@@ -112,8 +118,8 @@ light_source
 	#break
 	 
 	#range(30,40)
-	    //things to do in the fourth section : a) Callisto appears, orbit phases-out from transparency 
-	    #declare local_clock = clock -30;
+		//things to do in the fourth section : a) Callisto appears, orbit phases-out from transparency 
+		#declare local_clock = clock -30;
 		#declare callisto_radius_scaler = local_clock/10; 
 		#declare callisto_orbit_transmit = callisto_orbit_transmit - (local_clock/10)*0.2;
 		#declare io_radius_scaler = final_moon_scale;
@@ -125,8 +131,8 @@ light_source
 	#break  
 	  
 	#range(40,50)
-	    //things to do in the fifth section : a) moons start to revolve around Jupiter, while tidially locked
-	    #declare io_radius_scaler = final_moon_scale;
+		//things to do in the fifth section : a) moons start to revolve around Jupiter, while tidally locked
+		#declare io_radius_scaler = final_moon_scale;
 		#declare europa_radius_scaler = final_moon_scale;
 		#declare ganymede_radius_scaler = final_moon_scale;
 		#declare callisto_radius_scaler = final_moon_scale;
@@ -140,11 +146,11 @@ light_source
 	//Assess the latter  
 
 	#range(50,60)
-	    //things to do in the fifth section : a) shadows get realistic, audience starts to get the concept that
-	    //the Galilean satellites disappear behind jupiter and cast a shadow on it
-	    //No need in explaining the nuances of phases and complex phenomena given the 120 sec timeframe, but 
-	    //maybe nice and neat to implement in a longer video
-	    #declare io_radius_scaler = final_moon_scale;
+		//things to do in the fifth section : a) shadows get realistic, audience starts to get the concept that
+		//the Galilean satellites disappear behind jupiter and cast a shadow on it
+		//No need in explaining the nuances of phases and complex phenomena given the 120 sec timeframe, but 
+		//maybe nice and neat to implement in a longer video
+		#declare io_radius_scaler = final_moon_scale;
 		#declare europa_radius_scaler = final_moon_scale;
 		#declare ganymede_radius_scaler = final_moon_scale;
 		#declare callisto_radius_scaler = final_moon_scale;
@@ -152,9 +158,9 @@ light_source
 		#declare europa_orbit_transmit = final_orbit_transmit;
 		#declare ganymede_orbit_transmit = final_orbit_transmit;
 		#declare callisto_orbit_transmit = final_orbit_transmit;
-		
-	    #declare local_clock = clock -50;
-	    #declare all_objects_ambient = all_objects_ambient - (local_clock/10)*light_ambient;
+
+		#declare local_clock = clock -50;
+		#declare all_objects_ambient = all_objects_ambient - (local_clock/10)*light_ambient;
 	#break       
 		
 	#range(60,70)//things to do in the fifth section : a) shadow-cone highlightment phases out of transparency
@@ -189,7 +195,7 @@ light_source
 		#declare ganymede_orbit_transmit = final_orbit_transmit;
 		#declare callisto_orbit_transmit = final_orbit_transmit;
 		#declare all_objects_ambient = no_light_ambient;
-		#declare jupiter_cone_transmit = cone_final_transmission;
+		#declare jupiter_cone_transmit = jupiter_cone_final_transmit;
 		
 		#declare local_clock = clock -70;
 		#declare jupiter_shadow_cone_length = 5*jupiter_radius *exp(local_clock/2);
@@ -212,7 +218,7 @@ light_source
 		#declare callisto_orbit_transmit = final_orbit_transmit;
 		#declare all_objects_ambient = no_light_ambient;
 		#declare jupiter_cone_transmit = jupiter_cone_final_transmit;
-	    #declare jupiter_shadow_cone_length; = jupiter_shadow_cone_final_length;
+		#declare jupiter_shadow_cone_length = jupiter_shadow_cone_final_length;
 	
 	#break
 	
@@ -226,7 +232,7 @@ light_source
 sphere
 {
         <0,0,0> 150000
-        texture { pigment{ image_map { png "4kjupiter.png" map_type 1 } } }
+        texture { Jupiter_Texture }
         rotate<0,-90,0>
         rotate<0,-36*clock/10,0>
         finish{ 
@@ -242,7 +248,7 @@ cone{ <0,0,0> ,jupiter_radius,<jupiter_shadow_cone_length,0,0>, 0 pigment{ color
 //idea of the different orbital planes to the audience
  
 
-//starting revolution section, ATTENTION : Tidial lock is already represented
+//starting revolution section, ATTENTION : Tidal lock is already represented
 //TODO - Alessio : make transition smoother, reduce jerk
 #if(clock > io_rev_start)
     #declare io_rev_clock = (clock - io_rev_start)/10;
@@ -271,20 +277,22 @@ cone{ <0,0,0> ,jupiter_radius,<jupiter_shadow_cone_length,0,0>, 0 pigment{ color
 #else
     #declare callisto_rev_angle = 0;
 #end
+
  
 //Io
 sphere
 {       
         <-00000.0, 0,0> 7500 * io_radius_scaler
-        texture { pigment{ image_map { png "Io.png" map_type 1 } } }
-        rotate<0,io_rev_angle,0> //tidial lock
+        texture { Io_Texture }
+        rotate<0,io_rev_angle,0> //tidal lock
         translate<-250000,0,0>   
         rotate<0,io_rev_angle,0> //revolution
         finish{ambient all_objects_ambient}
 }      
 //orbit
-torus {250000, 2000 pigment{ color Green transmit io_orbit_transmit}
-       finish{ambient all_objects_ambient}
+torus {250000, 2000 pigment{ color Green transmit io_orbit_transmit }
+	finish { ambient 1 }
+	no_shadow
 }  
 
 
@@ -292,8 +300,8 @@ torus {250000, 2000 pigment{ color Green transmit io_orbit_transmit}
 sphere
 {
         <0,0,0> 7500 * europa_radius_scaler
-        texture { pigment{ image_map { png "Europa.png" map_type 1} } }
-        rotate<0,europa_rev_angle,0> //tidial lock rotation   
+        texture { Europa_Texture }
+        rotate<0,europa_rev_angle,0> //tidal lock rotation   
         translate<-300000,0,0>
         rotate<10,0,0>  
         rotate<0,europa_rev_angle,0> //revolution
@@ -301,15 +309,17 @@ sphere
 }     
 //orbit
 torus {300000, 2000 pigment{ color Red transmit europa_orbit_transmit}
-      finish{ambient all_objects_ambient}
-} 
+	finish { ambient 1 }
+	no_shadow
+}
+
 
 //Ganymede
 sphere
 {
         <0,0,0> 7500 * ganymede_radius_scaler
-        texture { pigment{ image_map { png "ganymede.png" map_type 1 } } }
-        rotate<0,ganymede_rev_angle,0> //tidial lock rotation 
+        texture { Ganymede_Texture }
+        rotate<0,ganymede_rev_angle,0> //tial lock rotation 
         translate<-400000,0,0>     
         rotate<0,ganymede_rev_angle,0> //revolution
         rotate<+5, 0, 0>               //orbital plane inclination
@@ -317,26 +327,29 @@ sphere
 }      
 //orbit
 torus {400000, 2000 pigment{ color Blue transmit ganymede_orbit_transmit}
-       rotate<+5,0,0> finish{ambient all_objects_ambient}
-} 
+	rotate<+5,0,0>
+	finish { ambient 1 }
+	no_shadow
+}
+
 
 //Callisto
 //Open Issue : represent high inclination and eclipse miss ? better to do with cone jerk
 sphere
 {
         <0,0,0> 7500 * callisto_radius_scaler
-        texture { 
-		pigment{image_map { png "Callisto.png" map_type 1 } } }    
-	    rotate<0,callisto_rev_angle,0> //tidial lock rotation   
-	    translate<-500000,0,0>
+        texture { Callisto_Texture }
+	rotate<0,callisto_rev_angle,0> //tidal lock rotation   
+	translate<-500000,0,0>
         rotate<0,callisto_rev_angle,0> //revolution
         rotate<0,0,-10>                //orbital plane inclination
         finish{ambient all_objects_ambient}
 }     
 //orbit
 torus {500000, 2000 pigment{ color Orange transmit callisto_orbit_transmit}
-       rotate <0,0,-10>
-       finish{ambient all_objects_ambient}
+	rotate <0,0,-10>
+	finish { ambient 1 }
+	no_shadow
 } 
 
 
