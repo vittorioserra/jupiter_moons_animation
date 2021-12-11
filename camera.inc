@@ -33,7 +33,6 @@
     }    
 #end   
 
-
 #macro camera_move_linear(x_start, y_start, z_start, x_end, y_end, z_end, c) 
    
     #declare x_diff = (x_end - x_start);
@@ -47,7 +46,51 @@
     camera
     {
         location <x_c, y_c, z_c>
-        look_at <0.0, 0.0,  0.0>
-        right x*image_width/image_height  
-    }    
-#end    
+        look_at <0.0, 0.0, 0.0>
+        right x*image_width/image_height
+    }
+#end
+
+#macro camera_move_straight_cubic(start, stop, c)
+    #debug concat("start: ", vstr(3, start, ", ", 0, 1), " stop: ", vstr(3, stop, ", ", 0, 1), " c: ", str(c, 0, 3), "\n")
+    // start: vector <x, y, z> where the camera starts at c=0
+    // stop : vector <x, y, z> where the camera ends at c=1
+    #local movement = stop - start;
+    #if(c < 0.5)
+        #local progress = 4* c * c * c;
+    #else
+        #local progress = 1 - pow(-2 * c + 2, 3) / 2;
+    #end
+
+    #debug concat("movement: ", vstr(3, movement, ", ", 0, 1), "\n")
+    #debug concat("progress: ", str(progress, 0, 3), "\n")
+    #debug concat("moveprog: ", vstr(3, movement * progress, ", ", 0, 1), "\n")
+    #debug concat("position: ", vstr(3, start + movement * progress, ", ", 0, 1), "\n")
+    camera
+    {
+        location start + movement * progress
+        look_at <0.0, 0.0, 0.0>
+        right x*image_width/image_height
+    }
+#end
+
+#macro camera_move_straight_elastic(start, stop, c)
+    #local movement = stop - start;
+    #local c5 = (2 * pi) / 4.5;
+    #if(c = 0)
+        #local progress = 0;
+    #elseif(c = 1)
+        #local progress = 1;
+    #elseif(c < 0.5)
+        #local progress = -(pow(2, 20 * c - 10) * sin((20 * c - 11.125) * c5)) / 2;
+    #else
+        #local progress = (pow(2, -20 * c + 10) * sin((20 * c - 11.125) * c5)) / 2 + 1
+    #end
+
+    camera
+    {
+        location start + movement * progress
+        look_at <0.0, 0.0, 0.0>
+        right x*image_width/image_height
+    }
+#end
