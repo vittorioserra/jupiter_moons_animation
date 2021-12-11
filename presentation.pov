@@ -88,21 +88,19 @@ sky_sphere
 
 #declare current_stage = 0;    
 
-
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = clock - current_stage;
 	jupiter_front_stationary(local_clock)
 #end
-#declare current_stage = current_stage + 1;  
+#declare current_stage = current_stage + 1;
 
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = clock - current_stage;
-	jupiter_reach_orbit_visual(local_clock)
+	jupiter_reach_orbit_insertion_visual(local_clock)
 #end
-#declare current_stage = current_stage + 1;
-
+#declare current_stage = current_stage + 1; 
 
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
@@ -130,6 +128,20 @@ sky_sphere
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = clock - current_stage;
 	callisto_appears(local_clock)
+#end
+#declare current_stage = current_stage + 1;  
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	jupiter_reach_orbit_visual(local_clock)
+#end
+#declare current_stage = current_stage + 1;
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	pause_orbit_visual(local_clock)
 #end
 #declare current_stage = current_stage + 1;
 
@@ -194,9 +206,23 @@ sky_sphere
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = clock - current_stage;
+	pause_moon_orbit_perspective(local_clock)
+#end
+#declare current_stage = current_stage + 1; 
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
 	shadows(local_clock)
 #end
 #declare current_stage = current_stage + 1;
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	pause_shadows_perspective(local_clock)
+#end
+#declare current_stage = current_stage + 1;  
 
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
@@ -210,5 +236,53 @@ sky_sphere
 	#declare local_clock = clock - current_stage;
 	lengthen_cone(local_clock)
 #end
+#declare current_stage = current_stage + 1;       
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	pause_visual_cone(local_clock)
+#end
 #declare current_stage = current_stage + 1;
 
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	fade_out_cone(local_clock)
+#end
+#declare current_stage = current_stage + 1; 
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	jupiter_reach_transit_visual(local_clock)
+#end
+#declare current_stage = current_stage + 1; 
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	jupiter_pause_transit_visual(local_clock)
+#end
+#declare current_stage = current_stage + 1;
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	exit_scene(local_clock)
+#end
+#declare current_stage = current_stage + 1; 
+
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	fade_orbits(local_clock)
+#end
+#declare current_stage = current_stage + 1;
+                                            
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = clock - current_stage;
+	exit_stationary(local_clock)
+#end
+#declare current_stage = current_stage + 1;
