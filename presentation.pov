@@ -86,7 +86,7 @@ sky_sphere
 #declare current_stage = 0;    
 
 // stage 00
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + stage_duration)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -104,7 +104,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration; 
 
 // stage 02
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -113,7 +113,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;
 
 // stage 03
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;  
@@ -123,7 +123,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;
 
 // stage 04
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -132,7 +132,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;
 
 // stage 05
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -220,7 +220,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;
 
 // stage 09
-#declare stage_duration = 1;
+#declare stage_duration = 2;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -267,7 +267,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;       
 
 // stage 14
-#declare stage_duration = 1;
+#declare stage_duration = 2;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -277,7 +277,7 @@ sky_sphere
 // 14.5
 
 // stage 15
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -295,7 +295,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration; 
 
 // stage 17
-#declare stage_duration = 1;
+#declare stage_duration = 2;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -305,7 +305,7 @@ sky_sphere
 // 18 so far
 
 // stage 18
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -314,7 +314,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration; 
 
 // stage 19
-#declare stage_duration = 1;
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -323,7 +323,7 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;
                                             
 // stage 20
-#declare stage_duration = 1;
+#declare stage_duration = 1.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
