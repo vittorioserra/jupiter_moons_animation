@@ -1,4 +1,8 @@
-// TODO - Alessio : Jupiter rotation jerk reduction
+#include "easings.inc"
+
+#declare orbit_thick = 1000;
+
+// TODO - Alessio : Jupiter rotation jerk reduction [DONE]
 #macro jupiter(ambient_scaler, cone_length, cone_transmit)
 #local jupiter_radius = 150000;
 sphere
@@ -6,10 +10,14 @@ sphere
         0, jupiter_radius
         texture { Jupiter_Texture }
         rotate y * -90
-        rotate y * (-36 * clock)
+        #if (clock < 1)
+                rotate y * (-36 * easeInSine(clock))
+        #else
+                rotate y * (-36 * clock)
+        #end
         finish{ ambient ambient_scaler }
 }
-//shadow-cone highliting
+//shadow-cone highlighting
 cone
 {
 	0, jupiter_radius,
@@ -19,8 +27,9 @@ cone
 #end
 
 // Moons of Jupiter
-// not all orbital planes have the same inclination, and not all are inclined on the same axis, this should roughly give the
-// idea of the different orbital planes to the audience
+// not all orbital planes have the same inclination, and not all are inclined
+// on the same axis, this should roughly give the idea of the different
+// orbital planes to the audience
 
 #macro io(radius_scaler, rev_angle, ambient_scaler, orbit_transmit)
 sphere
@@ -35,7 +44,7 @@ sphere
 //orbit
 torus
 {
-	250000, 2000
+	250000, orbit_thick
 	pigment { color Green transmit orbit_transmit }
 	finish { ambient 1 }
 	no_shadow
@@ -49,14 +58,14 @@ sphere
         texture { Europa_Texture }
         rotate<0, rev_angle, 0> // tidal lock rotation   
         translate x* -300000
-        rotate x * 10 // Vittorio - clarify this?
+        rotate x * 10 // show a better spot on the texture
         rotate y * rev_angle //revolution
         finish { ambient ambient_scaler }
 }     
 //orbit
 torus
 {
-	300000, 2000
+	300000, orbit_thick
 	pigment{ color Red transmit orbit_transmit}
 	finish { ambient 1 }
 	no_shadow
@@ -68,7 +77,7 @@ sphere
 {
         0, 7500 * radius_scaler
         texture { Ganymede_Texture }
-        rotate y * rev_angle //tidal lock rotation
+        rotate y * rev_angle // tidal lock rotation
         translate x * -400000
         rotate y * rev_angle // revolution
         rotate x * 5 // orbital plane inclination
@@ -77,7 +86,7 @@ sphere
 //orbit
 torus
 {
-	400000, 2000
+	400000, orbit_thick
 	pigment{ color Blue transmit orbit_transmit}
 	rotate x * 5
 	finish { ambient 1 }
@@ -100,7 +109,7 @@ sphere
 //orbit
 torus
 {
-	500000, 2000
+	500000, orbit_thick
 	pigment{ color Orange transmit orbit_transmit}
 	rotate z * -10
 	finish { ambient 1 }

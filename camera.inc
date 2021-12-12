@@ -1,14 +1,14 @@
-#macro camera_moveable(x_pos, y_pos, z_pos)
+#macro camera_moveable(position, aim)
     camera
     {
-        location <x_pos, y_pos, z_pos>
-        look_at <0.0, 0.0,  0.0>
+        location position
+        look_at aim
         right x*image_width/image_height
     }       
 #end   
 
-#macro camera_stationary(x_pos, y_pos, z_pos, c)
-    camera_moveable(x_pos, y_pos, z_pos)     
+#macro camera_stationary(position)
+    camera_moveable(position, 0)     
 #end    
 
 #declare epsilon = 0.1;
