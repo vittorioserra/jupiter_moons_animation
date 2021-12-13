@@ -14,7 +14,7 @@ global_settings { assumed_gamma 1 }
 //all revolutions and tidal rotations have negative angle increases
 
 // the following xchould be set in the .ini file
-// #declare texture_level = 1;
+ #declare texture_level = 1;
 #include "celestialtextures.inc"
 
 //keep orbits circular, no time for explaining Kepler's laws in 120 secs
@@ -94,6 +94,8 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration;
 
+//0.5
+
 // stage 01
 #declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
@@ -103,8 +105,10 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration; 
 
+//1.5
+
 // stage 02
-#declare stage_duration = 0.5;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -112,8 +116,10 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration;
 
+//2.0
+
 // stage 03
-#declare stage_duration = 0.5;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;  
@@ -122,8 +128,10 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration;
 
+//2.5
+
 // stage 04
-#declare stage_duration = 0.5;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
@@ -131,14 +139,18 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration;
 
+//3.0
+
 // stage 05
-#declare stage_duration = 0.5;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
 	callisto_appears(local_clock)
 #end
 #declare current_stage = current_stage + stage_duration;  
+
+//3.5
 
 // stage 06
 #declare stage_duration = 1;
@@ -149,6 +161,8 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration;
 
+//4.5
+
 // stage 07
 #declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
@@ -157,6 +171,8 @@ sky_sphere
 	pause_orbit_visual(local_clock)
 #end
 #declare current_stage = current_stage + stage_duration;
+
+//5.5
 
 // Calculate revolution parameters
 
@@ -219,14 +235,25 @@ sky_sphere
 #end
 #declare current_stage = current_stage + stage_duration;
 
+//6.5
+
 // stage 09
-#declare stage_duration = 2;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
 	pause_moon_orbit_perspective(local_clock)
 #end
 #declare current_stage = current_stage + stage_duration; 
+
+#declare stage_duration = 1;
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = (clock - current_stage) / stage_duration;
+	pause_moon_orbit_perspective(local_clock)
+#end
+#declare current_stage = current_stage + stage_duration; 
+
 //8.5 so far
 
 // stage 10
@@ -267,13 +294,22 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;       
 
 // stage 14
-#declare stage_duration = 2;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
 	pause_visual_cone(local_clock)
 #end
 #declare current_stage = current_stage + stage_duration;
+
+#declare stage_duration = 1;
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = (clock - current_stage) / stage_duration;
+	pause_visual_cone(local_clock)
+#end
+#declare current_stage = current_stage + stage_duration;
+
 // 14.5
 
 // stage 15
@@ -295,13 +331,22 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration; 
 
 // stage 17
-#declare stage_duration = 2;
+#declare stage_duration = 1;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
 	jupiter_pause_transit_visual(local_clock)
 #end
 #declare current_stage = current_stage + stage_duration;
+
+#declare stage_duration = 1;
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = (clock - current_stage) / stage_duration;
+	jupiter_pause_transit_visual(local_clock)
+#end
+#declare current_stage = current_stage + stage_duration;
+
 // 18 so far
 
 // stage 18
@@ -323,7 +368,15 @@ sky_sphere
 #declare current_stage = current_stage + stage_duration;
                                             
 // stage 20
-#declare stage_duration = 1.5;
+#declare stage_duration = 1;
+#if ((clock >= current_stage) & (clock < (current_stage + 1)))
+#debug concat("Stage ", str(current_stage, 0, 0), "\n")
+	#declare local_clock = (clock - current_stage) / stage_duration;
+	exit_stationary(local_clock)
+#end
+#declare current_stage = current_stage + stage_duration;
+
+#declare stage_duration = 0.5;
 #if ((clock >= current_stage) & (clock < (current_stage + 1)))
 #debug concat("Stage ", str(current_stage, 0, 0), "\n")
 	#declare local_clock = (clock - current_stage) / stage_duration;
