@@ -6,6 +6,18 @@
     (1 - cos((c * pi) / 2))
 #end
 
+#macro easeInOutSine(c)
+    (-(cos(c * pi) - 1) / 2)
+#end
+
+#macro easeInSineIntegral(c)
+    (2*(c/2-sin(pi*c/2)/pi))
+#end
+
+#macro easeInOutSineIntegral(c)
+    (c / 2 - sin(pi * c) / (2 * pi))
+#end
+
 #macro easeOutBack(c)
     (1 + 2.70158 * pow(c - 1, 15) + 1.70158 * pow(c - 1, 2))
 #end

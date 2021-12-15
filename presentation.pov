@@ -3,7 +3,7 @@ global_settings { assumed_gamma 1 }
 
 
 #include "colors.inc"
-#include "textures.inc"   
+#include "textures.inc"
 
 
 //TODO - Alessio : Make orbits shadowless [DONE], improve their lighting when changing ambient parameter [DONE]
@@ -13,8 +13,13 @@ global_settings { assumed_gamma 1 }
 //Moons not to scale, orbital inclinations and radii only roughly representative and not precise 
 //all revolutions and tidal rotations have negative angle increases
 
-// the following xchould be set in the .ini file
- #declare texture_level = 1;
+// Texture levels are:
+// '1': Full high res textures
+// '2': Low res textures
+// '3': No textures, solid colors
+//
+// It is recommended to set it in the .ini file as:
+// Declare=texture_level=X
 #include "celestialtextures.inc"
 
 //keep orbits circular, no time for explaining Kepler's laws in 120 secs
@@ -79,105 +84,45 @@ sky_sphere
 //concept gradually
 #declare light_ambient = 0.1;
 #declare no_light_ambient = 0;
-#declare all_objects_ambient = 0.1;   
+#declare all_objects_ambient = 0.1;
 
+#include "animation_framework.inc"
 #include "stages.inc"
 
-#declare current_stage = 0;    
+animation_start()
 
-// stage 00
-#declare stage_duration = 0.5;
-#if ((clock >= current_stage) & (clock < (current_stage + stage_duration)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	jupiter_front_stationary(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
+animation_persistent_register_value("jupi_rot", -90)
+animation_persistent_load_values()
 
-//0.5
+animation_step("jupiter_front_stationary", 1.3)
+animation_step("jupiter_reach_orbit_insertion_visual", 1)
+/*#debug "01\n"
+animation_step_begin(1, local_clock)
+#debug "02\n"
+#declare jupiter_rev_angle = -36 * easeInSine(local_clock);
+jupiter_front_stationary(local_clock)
+animation_step_end()
+#debug "03\n"
 
-// stage 01
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	jupiter_reach_orbit_insertion_visual(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration; 
-
-//1.5
-
-// stage 02
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	io_appears(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-//2.0
-
-// stage 03
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;  
-	#declare camera_z_pos = 0;
-	europa_appears(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-//2.5
-
-// stage 04
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	ganymede_appears(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-//3.0
-
-// stage 05
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	callisto_appears(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;  
-
-//3.5
-
-// stage 06
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	jupiter_reach_orbit_visual(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-//4.5
-
-// stage 07
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	pause_orbit_visual(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-//5.5
+animation_step_begin(1, local_clock)
+#debug "04\n"
+#debug concat("clock: ", str(clock, 0, 3), ", dur: ", str(animation_step_duration, 0, 3), ", local_clock: ", str(local_clock, 0, 3))
+#declare jupiter_rev_angle = -36 * local_clock;
+jupiter_reach_orbit_insertion_visual(local_clock)
+animation_step_end()
+#debug "05\n"
+*/
+animation_step("io_appears", 1)
+animation_step("europa_appears", 1)
+animation_step("ganymede_appears", 1)
+animation_step("callisto_appears", 1)
+animation_step("jupiter_reach_orbit_visual", 1)
+animation_step("pause_orbit_visual", 1)
 
 // Calculate revolution parameters
-
-#if (clock >= current_stage)
-	#declare c = clock - current_stage;
+/*
+#if (clock >= animation_framework_current_stage)
+	#declare c = clock - animation_framework_current_stage;
 	//clock by which the revolution of the galilean satellites will start
 	//temporal offset due to scenic reasons. Making them all start at the same
 	//time gives the false impression of "simmetry" and indirectly of simplicity
@@ -225,161 +170,21 @@ sky_sphere
 	#end
 
 #end
+*/
 
-// stage 08
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	revolution_start(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-//6.5
-
-// stage 09
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	pause_moon_orbit_perspective(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration; 
-
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	pause_moon_orbit_perspective(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration; 
-
-//8.5 so far
-
-// stage 10
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	shadows(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-// stage 11
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	pause_shadows_perspective(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;  
-//10.5
-
-// stage 12
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	show_cone(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-// stage 13
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	lengthen_cone(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;       
-
-// stage 14
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	pause_visual_cone(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	pause_visual_cone(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-// 14.5
-
-// stage 15
-#declare stage_duration = 0.5;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	fade_out_cone(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration; 
-
-// stage 16
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	jupiter_reach_transit_visual(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration; 
-
-// stage 17
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	jupiter_pause_transit_visual(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	jupiter_pause_transit_visual(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-// 18 so far
-
-// stage 18
-#declare stage_duration = 0.5;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	exit_scene(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration; 
-
-// stage 19
-#declare stage_duration = 0.5;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	fade_orbits(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-                                            
-// stage 20
-#declare stage_duration = 1;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	exit_stationary(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
-
-#declare stage_duration = 0.5;
-#if ((clock >= current_stage) & (clock < (current_stage + 1)))
-#debug concat("Stage ", str(current_stage, 0, 0), "\n")
-	#declare local_clock = (clock - current_stage) / stage_duration;
-	exit_stationary(local_clock)
-#end
-#declare current_stage = current_stage + stage_duration;
+//animation_step("revolution_start", 1)
+/*
+animation_step("pause_moon_orbit_perspective", 1)
+animation_step("shadows", 1)
+animation_step("pause_shadows_perspective", 1)
+animation_step("show_cone", 1)
+animation_step("lengthen_cone", 1)
+animation_step("pause_visual_cone", 1)
+animation_step("fade_out_cone", 1)
+animation_step("jupiter_reach_transit_visual", 1)
+animation_step("exit_scene", 1)
+animation_step("fade_orbits", 1)
+animation_step("exit_stationary", 1)
+animation_step("exit_stationary", 1)
+*/
+animation_persistent_save_values()
