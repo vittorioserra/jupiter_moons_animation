@@ -52,7 +52,7 @@
 #end
 
 #macro camera_move_straight_cubic(start, stop, c)
-    #debug concat("start: ", vstr(3, start, ", ", 0, 1), " stop: ", vstr(3, stop, ", ", 0, 1), " c: ", str(c, 0, 3), "\n")
+    //#debug concat("start: ", vstr(3, start, ", ", 0, 1), " stop: ", vstr(3, stop, ", ", 0, 1), " c: ", str(c, 0, 3), "\n")
     // start: vector <x, y, z> where the camera starts at c=0
     // stop : vector <x, y, z> where the camera ends at c=1
     #local movement = stop - start;
@@ -62,10 +62,12 @@
         #local progress = 1 - pow(-2 * c + 2, 3) / 2;
     #end
 
+    /*
     #debug concat("movement: ", vstr(3, movement, ", ", 0, 1), "\n")
     #debug concat("progress: ", str(progress, 0, 3), "\n")
     #debug concat("moveprog: ", vstr(3, movement * progress, ", ", 0, 1), "\n")
     #debug concat("position: ", vstr(3, start + movement * progress, ", ", 0, 1), "\n")
+    */
     camera
     {
         location start + movement * progress

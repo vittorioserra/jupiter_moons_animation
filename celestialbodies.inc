@@ -3,18 +3,14 @@
 #declare orbit_thick = 1000;
 
 // TODO - Alessio : Jupiter rotation jerk reduction [DONE]
-#macro jupiter(ambient_scaler, cone_length, cone_transmit)
+#macro jupiter(rev_angle, ambient_scaler, cone_length, cone_transmit)
+#debug concat("jupi_rot: ", str(rev_angle, 0, 6), "\n")
 #local jupiter_radius = 150000;
 sphere
 {
         0, jupiter_radius
         texture { Jupiter_Texture }
-        rotate y * -90
-        #if (clock < 1)
-                rotate y * (-36 * easeInSine(clock))
-        #else
-                rotate y * (-36 * clock)
-        #end
+        rotate y * rev_angle
         finish{ ambient ambient_scaler }
 }
 //shadow-cone highlighting
